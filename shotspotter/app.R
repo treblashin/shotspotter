@@ -1,6 +1,15 @@
 
 
 library(shiny)
+library(htmltools)
+library(tidyverse)
+library(ggplot2)
+library(fs)
+library(sf)
+library(ggthemes)
+library(leaflet)
+
+dc <- read_csv("shotspotter_dc.csv")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -10,14 +19,19 @@ ui <- fluidPage(
    
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
-      radioButtons(inputId = "year",
-                   label = "Year",
-                   choices = c("2006", "2007")
+      sliderInput(inputId = "year",
+                  label = "Year",
+                  min = 2006,
+                  max = 2016,
+                  value = 1,
+                  step = 1,
+                  sep = "",
+                  animate = TRUE
       ),
       
       # Show a plot of the generated distribution
       mainPanel(
-         plotOutput("leafletPlot")
+         leafletOutput("leafletPlot")
       )
    )
 )
@@ -25,16 +39,18 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
-   output$leafletPlot <- renderPlot({
+   output$leafletPlot <- renderLeaflet({
      
      data <- subset(dc, year == input$year)
      
      map <- data %>%
        leaflet() %>%
-       addTiles %>%
-       addCircleMarkers(data = data, radius = .5)
+       addTiles() %>%
+       addCircleMarkers(data = data, radius = .5, label = ~htmlEscape(incidentid)) %>%
+       setView(lat = 38.865, lng = -77, zoom = 12.25) 
      
      map
+     
    })
 }
 

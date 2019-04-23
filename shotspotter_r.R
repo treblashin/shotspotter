@@ -1,4 +1,4 @@
 dc %>%
   leaflet() %>%
   addTiles %>%
-  addCircleMarkers(data = dc, radius = .5)
+  addCircleMarkers(data = dc, radius = .5, label = )

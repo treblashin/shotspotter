@@ -23,7 +23,7 @@ download.file(url = "http://justicetechlab.org/wp-content/uploads/2018/05/washin
                 incidentid = col_double(),
                 latitude = col_double(),
                 longitude = col_double(),
-                year = col_character(),
+                year = col_double(),
                 month = col_double(),
                 hour = col_double(),
                 minute = col_double(),
@@ -38,6 +38,12 @@ dc <- dc %>%
   select(-type) %>%
   filter(latitude > 38.7 & longitude < -76,
          !is.na(incidentid))
+<<<<<<< HEAD
+=======
+
+write_csv(x = dc, path = "shotspotter_dc.csv")
+```
+>>>>>>> 1da6f6a18458b50577f50da0ee60f79afaf9e36f
 
 
 
