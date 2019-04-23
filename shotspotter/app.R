@@ -10,13 +10,14 @@ ui <- fluidPage(
    
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
-      radioButton(
-        
+      radioButtons(inputId = "year",
+                   label = "Year",
+                   choices = c(dc$year)
       ),
       
       # Show a plot of the generated distribution
       mainPanel(
-         plotOutput("distPlot")
+         plotOutput("leafletPlot")
       )
    )
 )
@@ -24,13 +25,17 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
    
-   output$distPlot <- renderPlot({
-      # generate bins based on input$bins from ui.R
-      x    <- faithful[, 2] 
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-      
-      # draw the histogram with the specified number of bins
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  data <- dc %>%
+    filter(year == input$year)
+  
+   output$leafletPlot <- renderPlot({
+     
+     map <- data %>%
+       leaflet() %>%
+       addTiles %>%
+       addCircleMarkers(data = dc, radius = .5)
+     
+     map
    })
 }
 
