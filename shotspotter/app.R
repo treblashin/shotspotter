@@ -6,7 +6,7 @@ library(shiny)
 ui <- fluidPage(
    
    # Application title
-   titlePanel("Old Faithful Geyser Data"),
+   titlePanel("Shotspotter Data in Washington D.C."),
    
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
@@ -27,9 +27,7 @@ server <- function(input, output) {
   
    output$leafletPlot <- renderPlot({
      
-     # data <- subset(dc, year == input$year)
-     
-     data <- dc
+     data <- subset(dc, year == input$year)
      
      map <- data %>%
        leaflet() %>%
