@@ -13,6 +13,7 @@ library(tigris)
 library(fs)
 library(sf)
 library(ggthemes)
+library(leaflet)
 ```
 
 ```{r download, message=FALSE, echo=FALSE}
@@ -29,12 +30,22 @@ download.file(url = "http://justicetechlab.org/wp-content/uploads/2018/05/washin
                 second = col_double(),
                 numshots = col_double()))
 
-shotspotter <- read_csv("shotspotter.csv")
+dc <- read_csv("shotspotter.csv")
 
-shotspotter <- shotspotter %>% 
-  select(-type)
+file_delete("shotspotter.csv")
+
+dc <- dc %>% 
+  select(-type) %>%
+  filter(latitude > 38.7 & longitude < -76,
+         !is.na(incidentid))
 ```
 
 ```{r pressure, message=FALSE, echo=FALSE}
+
+dc %>%
+  leaflet() %>%
+  addTiles %>%
+  addCircleMarkers(data = dc, radius = 2)
+
 ```
 
