@@ -1,0 +1,20 @@
+---
+title: "shotspotter"
+author: "Albert Shin"
+date: "4/22/2019"
+output: html_document
+---
+
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r cars, message=FALSE, echo=FALSE}
+plot(cars)
+```
+
+```{r pressure, message=FALSE, echo=FALSE}
+
+```
+
