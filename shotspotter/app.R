@@ -12,7 +12,7 @@ ui <- fluidPage(
    sidebarLayout(
       radioButtons(inputId = "year",
                    label = "Year",
-                   choices = c(dc$year)
+                   choices = c("2006", "2007")
       ),
       
       # Show a plot of the generated distribution
@@ -24,16 +24,15 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-   
-  data <- dc %>%
-    filter(year == input$year)
   
    output$leafletPlot <- renderPlot({
+     
+     data <- subset(dc, year == input$year)
      
      map <- data %>%
        leaflet() %>%
        addTiles %>%
-       addCircleMarkers(data = dc, radius = .5)
+       addCircleMarkers(data = data, radius = .5)
      
      map
    })
