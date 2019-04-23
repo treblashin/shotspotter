@@ -36,14 +36,5 @@ shotspotter <- shotspotter %>%
 ```
 
 ```{r pressure, message=FALSE, echo=FALSE}
-dcshape <- places(state = 11, class = "sf", cb = TRUE)
-
-shotspotter <- shotspotter %>%
-  st_as_sf(coords = c("latitude", "longitude"), crs = 4326)
-
-ggplot(data = dcshape) + 
-  geom_sf() + 
-  geom_sf(data = shotspotter) + 
-  theme_map()
 ```
 
