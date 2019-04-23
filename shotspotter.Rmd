@@ -8,13 +8,42 @@ output: html_document
 ```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(ggplot2)
+library(readr)
+library(tigris)
+library(fs)
+library(sf)
+library(ggthemes)
 ```
 
-```{r cars, message=FALSE, echo=FALSE}
-plot(cars)
+```{r download, message=FALSE, echo=FALSE}
+download.file(url = "http://justicetechlab.org/wp-content/uploads/2018/05/washington_dc_2006to2017.csv",
+              destfile = "shotspotter.csv", mode = "wb",
+              col_types = cols(
+                incidentid = col_double(),
+                latitude = col_double(),
+                longitude = col_double(),
+                year = col_double(),
+                month = col_double(),
+                hour = col_double(),
+                minute = col_double(),
+                second = col_double(),
+                numshots = col_double()))
+
+shotspotter <- read_csv("shotspotter.csv")
+
+shotspotter <- shotspotter %>% 
+  select(-type)
 ```
 
 ```{r pressure, message=FALSE, echo=FALSE}
+dcshape <- places(state = 11, class = "sf", cb = TRUE)
 
+shotspotter <- shotspotter %>%
+  st_as_sf(coords = c("latitude", "longitude"), crs = 4326)
+
+ggplot(data = dcshape) + 
+  geom_sf() + 
+  geom_sf(data = shotspotter) + 
+  theme_map()
 ```
 
