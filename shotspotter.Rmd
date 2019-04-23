@@ -38,14 +38,7 @@ dc <- dc %>%
   select(-type) %>%
   filter(latitude > 38.7 & longitude < -76,
          !is.na(incidentid))
-<<<<<<< HEAD
-=======
 
 write_csv(x = dc, path = "shotspotter_dc.csv")
-```
->>>>>>> 1da6f6a18458b50577f50da0ee60f79afaf9e36f
-
-
-
 ```
 

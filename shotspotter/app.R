@@ -31,8 +31,15 @@ ui <- fluidPage(
       
       # Show a plot of the generated distribution
       mainPanel(
-         leafletOutput("leafletPlot")
+        "Project created by Evelyn Cai ('22) and Albert Shin ('22). The data is from 
+        Justice Tech Lab's ShotSpotter data, which detects the sound of gunfire and 
+        records relevant information.",
+        a("Data can be found here.", href="http://justicetechlab.org/shotspotter-data/"),
+        "The GitHub repository can be found",
+        a("here.", href="https://github.com/treblashin/shotspotter"),
+        tabsetPanel(tabPanel("Plot", leafletOutput("leafletPlot"))
       )
+   )
    )
 )
 
@@ -48,12 +55,17 @@ server <- function(input, output) {
        addTiles() %>%
        addCircleMarkers(data = data, radius = .5, label = ~htmlEscape(incidentid)) %>%
        setView(lat = 38.865, lng = -77, zoom = 12.25) 
-     
      map
-     
    })
-}
+   
+   output$summary <- renderText({
+     # url <- a("Shot Spotter", href="")
+     HTML(paste())
+     a("ShotSpotter Project", href="http://justicetechlab.org/shotspotter-data/")
 
+})
+
+}
 # Run the application 
 shinyApp(ui = ui, server = server)
 
