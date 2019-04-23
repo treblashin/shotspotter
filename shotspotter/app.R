@@ -27,7 +27,9 @@ server <- function(input, output) {
   
    output$leafletPlot <- renderPlot({
      
-     data <- subset(dc, year == input$year)
+     # data <- subset(dc, year == input$year)
+     
+     data <- dc
      
      map <- data %>%
        leaflet() %>%
